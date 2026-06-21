@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Streamlit secrets (never commit API keys)
+.streamlit/secrets.toml
+
+# Environment
+.env
