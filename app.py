@@ -1,5 +1,5 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai
 from PIL import Image
 
 # ==========================================
@@ -13,10 +13,11 @@ except (KeyError, FileNotFoundError):
     st.error("APIキーが設定されていません。Streamlit CloudのSecrets設定を確認してください。")
     st.stop()
 
-genai.configure(api_key=API_KEY)
+# 新SDK (google-genai) のクライアントを初期化
+client = genai.Client(api_key=API_KEY)
 
 # モデル設定 (最新のGemini 2.5を指定)
-model = genai.GenerativeModel("gemini-2.5-flash")
+MODEL_NAME = "gemini-2.5-flash"
 
 # ==========================================
 # アプリの画面構成
@@ -42,7 +43,10 @@ if uploaded_file is not None:
                 2. **確信度**: 高・中・低
                 3. **対策アドバイス**: 生徒にもわかるような具体的な対処法
                 """
-                response = model.generate_content([prompt, image])
+                response = client.models.generate_content(
+                    model=MODEL_NAME,
+                    contents=[prompt, image],
+                )
                 st.markdown("### 🔍 診断結果")
                 st.write(response.text)
                 st.caption("※ この結果はAIによる推測です。対応の前に先生・専門家への確認をお願いします。")
