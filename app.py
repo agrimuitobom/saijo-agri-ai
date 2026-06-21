@@ -1,6 +1,7 @@
 import streamlit as st
 from google import genai
 from PIL import Image, ImageOps, UnidentifiedImageError
+from datetime import datetime
 
 # ==========================================
 # 設定エリア
@@ -75,7 +76,12 @@ if uploaded_file is not None:
         image.thumbnail((MAX_IMAGE_DIMENSION, MAX_IMAGE_DIMENSION))
 
     st.image(image, caption='アップロードされた写真', use_container_width=True)
-    
+
+    # 別の画像に切り替わったら前回の診断結果をクリア
+    if st.session_state.get("last_file_id") != uploaded_file.file_id:
+        st.session_state["last_file_id"] = uploaded_file.file_id
+        st.session_state.pop("diagnosis_result", None)
+
     if st.button("AIで診断する"):
         with st.spinner('AIが診断中...'):
             try:
@@ -83,12 +89,32 @@ if uploaded_file is not None:
                     model=MODEL_NAME,
                     contents=[DIAGNOSIS_PROMPT, image],
                 )
-                result_text = (response.text or "").strip()
-                if not result_text:
-                    st.warning("診断結果を取得できませんでした。別の写真でもう一度お試しください。")
-                else:
-                    st.markdown("### 🔍 診断結果")
-                    st.write(result_text)
-                    st.caption("※ この結果はAIによる推測です。対応の前に先生・専門家への確認をお願いします。")
+                st.session_state["diagnosis_result"] = (response.text or "").strip()
             except Exception as e:
+                st.session_state.pop("diagnosis_result", None)
                 st.error(f"エラーが発生しました: {e}")
+
+    # 診断結果の表示（ダウンロード押下で再実行されても結果を保持する）
+    result_text = st.session_state.get("diagnosis_result")
+    if result_text == "":
+        st.warning("診断結果を取得できませんでした。別の写真でもう一度お試しください。")
+    elif result_text:
+        st.markdown("### 🔍 診断結果")
+        st.write(result_text)
+        st.caption("※ この結果はAIによる推測です。対応の前に先生・専門家への確認をお願いします。")
+
+        now = datetime.now()
+        report = (
+            f"西農PLANTDOC 診断結果\n"
+            f"診断日時: {now.strftime('%Y-%m-%d %H:%M')}\n"
+            f"{'-' * 30}\n\n"
+            f"{result_text}\n\n"
+            f"{'-' * 30}\n"
+            f"※ この結果はAIによる推測です。対応の前に先生・専門家にご確認ください。\n"
+        )
+        st.download_button(
+            label="📄 診断結果をダウンロード",
+            data=report.encode("utf-8"),
+            file_name=f"plantdoc_{now.strftime('%Y%m%d_%H%M%S')}.txt",
+            mime="text/plain",
+        )
