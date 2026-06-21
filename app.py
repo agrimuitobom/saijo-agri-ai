@@ -23,6 +23,7 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 # ==========================================
 st.title("西農PLANTDOC 🌿")
 st.write("作物の写真をアップロードすると、Geminiが病害虫を診断します。")
+st.caption("⚠️ AIによる診断は参考情報です。誤診の可能性があるため、農薬の使用や防除を行う前に、必ず先生や専門家にご確認ください。")
 
 uploaded_file = st.file_uploader("写真を撮ってアップロードしてください", type=["jpg", "jpeg", "png"])
 
@@ -44,5 +45,6 @@ if uploaded_file is not None:
                 response = model.generate_content([prompt, image])
                 st.markdown("### 🔍 診断結果")
                 st.write(response.text)
+                st.caption("※ この結果はAIによる推測です。対応の前に先生・専門家への確認をお願いします。")
             except Exception as e:
                 st.error(f"エラーが発生しました: {e}")
