@@ -9,7 +9,7 @@ from PIL import Image
 # Streamlit Cloudの「Secrets（金庫）」からキーを取得します
 try:
     API_KEY = st.secrets["GEMINI_API_KEY"]
-except:
+except (KeyError, FileNotFoundError):
     st.error("APIキーが設定されていません。Streamlit CloudのSecrets設定を確認してください。")
     st.stop()
 
