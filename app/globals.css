@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  /* 葉の緑 — メインブランドカラー（屋外視認性のため濃いめ） */
+  --color-leaf-50: #f3f8f1;
+  --color-leaf-100: #e4f0de;
+  --color-leaf-200: #c9e1bf;
+  --color-leaf-300: #a4cc93;
+  --color-leaf-400: #79b063;
+  --color-leaf-500: #579441;
+  --color-leaf-600: #417831;
+  --color-leaf-700: #345f28;
+  --color-leaf-800: #2c4d23;
+  --color-leaf-900: #253f1f;
+
+  /* 土のアースカラー — 背景・テキスト */
+  --color-soil-50: #faf9f6;
+  --color-soil-100: #f1efe8;
+  --color-soil-200: #e2ded1;
+  --color-soil-300: #cbc4ad;
+  --color-soil-400: #a89e82;
+  --color-soil-500: #8a7f64;
+  --color-soil-600: #6e654e;
+  --color-soil-700: #564f3e;
+  --color-soil-800: #443e32;
+  --color-soil-900: #2b271f;
+
+  /* 収穫のアクセントカラー */
+  --color-harvest-500: #d97706;
+  --color-harvest-600: #b45309;
+
+  --font-sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic",
+    "Yu Gothic", "Meiryo", system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  /* 屋外・高齢ユーザー向けにベース文字サイズを確保 */
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-soil-50);
+  color: var(--color-soil-900);
+  font-family: var(--font-sans);
+  line-height: 1.7;
+}
+
+/* キーボード操作時のフォーカスを高コントラストで明示 */
+:focus-visible {
+  outline: 3px solid var(--color-leaf-600);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* iOSでinputにズームがかからないよう16px以上を保証 */
+input,
+textarea,
+select,
+button {
+  font-size: 1rem;
+}
