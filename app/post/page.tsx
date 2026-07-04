@@ -2,12 +2,17 @@
 
 import { useRef, useState } from "react";
 import { Camera, CheckCircle2, Send, X } from "lucide-react";
-import type { Category } from "@/lib/data";
+import type { ReportCategory } from "@/lib/data";
 
-const categories: Category[] = ["ノウハウ", "病害虫", "質問", "市況"];
+const categories: ReportCategory[] = [
+  "実践レポート",
+  "栽培記録",
+  "お知らせ",
+  "質問",
+];
 
 export default function NewPostPage() {
-  const [category, setCategory] = useState<Category>("ノウハウ");
+  const [category, setCategory] = useState<ReportCategory>("実践レポート");
   const [body, setBody] = useState("");
   const [photos, setPhotos] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
@@ -29,10 +34,12 @@ export default function NewPostPage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">投稿を作成</h1>
-      <p className="-mt-2 text-[15px] text-soil-600">
-        気づいたこと・困りごとを気軽に共有しましょう。
-      </p>
+      <div>
+        <h1 className="text-2xl font-bold">投稿する</h1>
+        <p className="mt-1 text-[15px] leading-relaxed text-soil-600">
+          活動の報告や、教材についての質問をどうぞ。校外のみなさんの「作ってみた」報告も大歓迎です。
+        </p>
+      </div>
 
       {submitted && (
         <div
@@ -92,7 +99,7 @@ export default function NewPostPage() {
             rows={7}
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            placeholder="例:トマトの葉に白い斑点が出ています。同じ症状の方いますか?"
+            placeholder="例:土壌水分センサーを自分の学校でも作ってみました。DRY/WETの調整で質問があります…"
             className="w-full rounded-2xl border-2 border-soil-300 bg-white p-4 text-[16px] leading-relaxed placeholder:text-soil-400 focus:border-leaf-600"
           />
         </div>

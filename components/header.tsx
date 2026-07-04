@@ -3,10 +3,19 @@ import { Bell, Sprout } from "lucide-react";
 export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-leaf-800/20 bg-leaf-800 text-white shadow-sm">
-      <div className="mx-auto flex h-14 w-full max-w-lg items-center justify-between px-4">
-        <div className="flex items-center gap-2">
-          <Sprout className="h-6 w-6 text-leaf-200" aria-hidden="true" />
-          <span className="text-lg font-bold tracking-wide">アグリシェア</span>
+      <div className="mx-auto flex h-16 w-full max-w-lg items-center justify-between px-4">
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
+            <Sprout className="h-6 w-6 text-leaf-200" aria-hidden="true" />
+          </span>
+          <div className="leading-tight">
+            <p className="text-[17px] font-bold tracking-wide">
+              西農スマートアグリLab
+            </p>
+            <p className="text-[11px] text-leaf-200">
+              愛媛県立西条農業高等学校
+            </p>
+          </div>
         </div>
         <button
           type="button"

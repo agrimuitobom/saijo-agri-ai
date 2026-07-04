@@ -1,28 +1,35 @@
 "use client";
 
 import { useState } from "react";
-import { PostCard } from "@/components/post-card";
-import { posts, type Category } from "@/lib/data";
+import { ReportCard } from "@/components/post-card";
+import { reports, type ReportCategory } from "@/lib/data";
 
-const filters = ["すべて", "ノウハウ", "病害虫", "質問", "市況"] as const;
+const filters = [
+  "すべて",
+  "実践レポート",
+  "栽培記録",
+  "お知らせ",
+  "質問",
+] as const;
 type Filter = (typeof filters)[number];
 
-export default function TimelinePage() {
+export default function ReportsPage() {
   const [filter, setFilter] = useState<Filter>("すべて");
 
   const visible =
     filter === "すべて"
-      ? posts
-      : posts.filter((p) => p.category === (filter as Category));
+      ? reports
+      : reports.filter((r) => r.category === (filter as ReportCategory));
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">みんなの広場</h1>
-      <p className="-mt-2 text-[15px] text-soil-600">
-        近隣の農家のノウハウ・病害虫情報をチェックしましょう。
-      </p>
+      <div>
+        <h1 className="text-2xl font-bold">活動記録</h1>
+        <p className="mt-1 text-[15px] leading-relaxed text-soil-600">
+          西農の日々の実践と、全国のみなさんからの報告・質問。
+        </p>
+      </div>
 
-      {/* カテゴリ絞り込み(横スクロール可の大きなチップ) */}
       <div
         role="group"
         aria-label="カテゴリで絞り込む"
@@ -49,8 +56,8 @@ export default function TimelinePage() {
       </div>
 
       <div className="space-y-3" aria-live="polite">
-        {visible.map((post) => (
-          <PostCard key={post.id} post={post} />
+        {visible.map((report) => (
+          <ReportCard key={report.id} report={report} />
         ))}
         {visible.length === 0 && (
           <p className="rounded-2xl border border-soil-200 bg-white p-6 text-center text-soil-600">

@@ -4,9 +4,9 @@ import { Header } from "@/components/header";
 import { BottomNav } from "@/components/bottom-nav";
 
 export const metadata: Metadata = {
-  title: "アグリシェア | 農家のための情報共有プラットフォーム",
+  title: "西農スマートアグリLab | 愛媛県立西条農業高等学校",
   description:
-    "天気・市況・病害虫情報をひと目で。農家同士でノウハウを共有できるアグリテックプラットフォーム。",
+    "西条農業高校のスマート農業実践と、ラズパイを使ったセンサーづくりの教材を日本中に発信するプラットフォーム。",
 };
 
 export const viewport: Viewport = {
